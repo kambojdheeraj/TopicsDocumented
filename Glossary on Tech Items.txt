@@ -1,0 +1,119 @@
+1) Web.xml -> defines mappings between URL paths and the servlets that handle requests with those paths. The web server uses this configuration to identify the servlet to handle a given request and call the class method that corresponds to the request method. For example: the doGet() method for HTTP GET requests.
+ <servlet>
+        <servlet-name>redteam</servlet-name>
+        <servlet-class>mysite.server.TeamServlet</servlet-class>
+        <init-param>
+            <param-name>teamColor</param-name>
+            <param-value>red</param-value>
+        </init-param>
+        <init-param>
+            <param-name>bgColor</param-name>
+            <param-value>#CC0000</param-value>
+        </init-param>
+    </servlet>
+
+2) Web server and Application server
+A web Server means: Handling HTTP requests (usually from browsers). A Servlet Container (e.g. Tomcat) means: It can handle servlets & JSP.
+An Application Server (e.g. GlassFish) means: It can manage Java EE applications (usually both servlet/JSP and EJBs).
+
+3) A WAR is just a JAR with special properites. It needs to have a WEB-INF, under which you need a web.xml to describe your deployment, any app server dependentXML configuration files, and usually a lib, classes, and other odds and ends.
+
+4) RPM - An RPM package uses the .rpm extension and is a bundle (a collection) of different files. It can contain the following:
+
+Binary files, also known as executables (nmap, stat, xattr, ssh, sshd, etc.).
+Configuration files (sshd.conf, updatedb.conf, logrotate.conf, etc.).
+Documentation files (README, TODO, AUTHOR, etc.).
+
+5) JAX-RS
+JAX-RS stands for JAVA API for RESTful Web Services. JAX-RS is a JAVA based programming language API and specification to provide support for created RESTful Web Services.
+@GET, @PUT etc annotation used under this.
+
+6) OpenAPI Specification (formerly known as Swagger Specification) is an open-source format for describing and documenting APIs. The latest version of OpenAPI is 3.0. OpenAPI definitions can be written in JSON or YAML.
+
+A simple OpenAPI 3.0 specification YAML describing GET Artist details looks like this:
+
+#--Meta Data Start--#
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Simple API
+  description: A simple API to illustrate OpenAPI concepts
+
+servers:
+  - url: https://example.io/v1   #-- URL of API --#
+
+components:   
+  securitySchemes:  #-- Security related details --#
+    BasicAuth:
+      type: http
+      scheme: basic
+security:
+  - BasicAuth: []
+# --Meta Data End--#
+
+paths: #-- Request and Response including errors for get, put, post etc---#
+  /artists:
+    get:
+      description: Returns a list of artists 
+      #  ----- Added lines  ----------------------------------------
+      parameters:
+        - name: limit
+          in: query
+          description: Limits the number of items on a page
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          description: Specifies the page number of the artists to be displayed
+          schema:
+            type: integer
+      #  ---- /Added lines  ----------------------------------------         
+      
+      responses: #--Output from API --#
+        '200':
+          description: Successfully returned a list of artists
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - username
+                  properties:
+                    artist_name:
+                      type: string
+                    artist_genre:
+                      type: string
+                    albums_recorded:
+                      type: integer
+                    username:
+                      type: string
+
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+					
+7) Swagger - Originally Open API was known as Swagger and later on under Linux open foundation, it formed Open API with various companies aligned to it like Google to make the project open source. Then swagger was acquired by Smart Bear. Now Swagger is used to document API using Open API Specs and provide tools for same like Swagger Editor online.
+https://editor.swagger.io/ - To check API spec is valid or not
+
+https://blog.readme.com/what-is-swagger-and-why-it-matters/
+
+8) Use case to check camunda open API using swagger editor
+https://docs.camunda.org/manual/7.15/reference/rest/openapi/
+
+a) Download JAR for your camunda version - https://app.camunda.com/nexus/service/rest/repository/browse/camunda-bpm/org/camunda/bpm/camunda-engine-rest-openapi/7.15.0/
+b) Take openapi.json from jar
+c) Paste it in https://editor.swagger.io/
+d) Run localhost camunda engine
+e) HAve to Put @cors on your REST controller and can check the api running on localhost
+Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any origins (domain, scheme, or port) other than its own from which a browser should permit loading of resources i.e. let browser to take source of the webpage from anywhere.
+
+9) Import OPenAPI specs using Postman
+Click on import -> click on OpenAPi link

@@ -1,0 +1,23 @@
+github
+https://github.com/kambojdheeraj
+Github@2611
+
+docker
+kambojdheeraj
+docker@26
+
+postman
+kambojdheeraj@gmail.com
+Postman@0311
+
+Camunda admin user
+camunda
+password
+
+VSC
+CTRL + T -> GO to file
+ctrl + shift+ P in VSC to run some command tips available like changing terminal colour
+
+workday
+210228
+Markit@001

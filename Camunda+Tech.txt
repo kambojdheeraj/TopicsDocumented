@@ -1,0 +1,633 @@
+Reference - For pics and diagrams -> Technology.doc
+
+https://docs.camunda.org/get-started/quick-start/ - Step by step learning
+Start
+ 
+1) quick start to check all components on top level.
+
+2) Java install
+java -version
+
+3) Camunda platform - community edition
+platform to run bpmn engine. In Camunda Platform you can deploy processes to the process engine in BPMN 2.0 XML format. The XML files are parsed and transformed into a process definition graph structure. This graph structure is executed by the process engine.
+When we install Camunda Platform and run start.bat, it run spring boot application (check logs in cmd) so tomcat is embedded.
+http://localhost:8080/ - run to check.
+Tomcat through springboot is available at C:\Users\Dell\AppData\Local\Temp\tomcatwork@1234
+
+4) Camunda modeler
+Deploy and install
+
+5) STS
+https://start.spring.io./
+groupid - unique across like com.markit.workflow
+artifact - unique name of project
+
+6) GIT. Exe and then Tortoise Git to get quick link
+
+7) Maven
+A repository in Maven is used to hold build artifacts and dependencies of varying types. The default local repository is located in the .m2/repository folder under the home directory of the user.
+
+If an artifact or a plug-in is available in the local repository, Maven uses it. Otherwise, it is downloaded from a central repository and stored in the local repository. The default central repository is Maven Central.
+https://mvnrepository.com/repos/central
+
+8) Camunda documentation for full manual.
+Camunda for quick start.
+
+9) Spring boot setup of camunda
+
+a) To enable web application
+ <dependency>
+      <groupId>org.camunda.bpm.springboot</groupId>
+      <artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
+      <version>7.15.0</version>
+    </dependency>
+
+10) CURL is not REST. One is a tool, the other is a style of software architecture. You can use cURL to perform REST calls from the command line, but you do not need to implement it in your client application since there are likely tools available.
+
+
+11) External Task Client - https://docs.camunda.org/manual/7.15/user-guide/ext-client/
+The Camunda External Task Client allows to set up remote Service Tasks for your workflow.
+Like publish and subscribe -> 
+As soon as the Workflow Engine reached an External Task in a BPMN process, a corresponding activity instance is created, which is waiting to be fetched and locked by a client.
+
+The client subscribes to the topic and fetches continuously for newly appearing External Tasks provided by the Workflow Engine. Each fetched External Task is marked with a temporary lock. Like this, no other clients can work on this certain External Task in the meanwhile. A lock is valid for the specified period of time and can be extended.
+
+When setting up a new topic subscription, it is mandatory to specify the topic name and a handler function. Once a topic has been subscribed, the client can start receiving work items by polling the process engine’s API.
+
+You can have custom handler to perform various tasks based on events published.
+Refer 3rd point on doc.
+
+12) /engine-rest - this requires camunda rest api
+<dependency>
+			<groupId>org.camunda.bpm.springboot</groupId>
+			<artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
+			<version>${camunda.spring-boot.version}</version>
+		</dependency>
+
+13) Service Task -> Implementation need to be given in modeler. Topic field comes up then. Same topic would be given in code.
+
+14) Cockpit - http://localhost:8080/camunda/app/cockpit/ 
+
+15) Tasklist http://localhost:8080/camunda/app/tasklist/ - Tasklist is a web application that allows you to work on User Tasks. Tasklist is part of the Camunda Platform distribution and ready to use by opening.
+User Tasks created in modeller and then in form added the fields. through tasklist you can provide value for those form fileds of usertasks.
+
+16) Gateway -> expression are given on arrows. Conditions on arrows.
+
+17) DMN -> Create Cockpit - Decission tab have DMN deployed. You can check execution of DMN in cockpit.
+
+End - Quick start guide
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+1) RPA - robotic-process-automation.  Define - Robotic process automation (RPA) is a software technology that makes it easy to build, deploy, and manage software robots that emulate humans actions interacting with digital systems and software. Just like people, software robots can do things like understand what’s on a screen, complete the right keystrokes, navigate systems, identify and extract data, and perform a wide range of defined actions.
+
+2) UiPath is a global software company for robotic process automation founded in Romania by Daniel Dines and Marius Tîrcă and headquartered in New York City.
+UiPath is a Robotic Process Automation tool that is used for Windows desktop automation. It is used to automate repetitive/redundant tasks and eliminates human intervention. The tool is simple to use and has a drag and drop functionality of activities.
+UiPath caters to companies from all industries, of all sizes. Our Studio Community version is free for individual developers, small professional teams, education, open source and training purposes.
+UIPath and Automation Anywhere IDE
+The UIPath tools allow the user to “draw” a workflow within a flow chart editor. This is helpful for beginners and marketed as “no coding” solution.
+
+3) Camunda RPA bridge works as integration source for RPA third party tools.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Deep Dive - From here on will go in details https://docs.camunda.org/manual/7.15/
+
+https://docs.camunda.org/manual/7.15/introduction/
+
+Introduction
+
+1) Difference b/w community and Enterprise edition
+
+Function comparison
+
+Comparison item			Community Edition (Open Source Edition)	 Enterprise Edition (Commercial Edition)	Remarks			
+Process engine			Have									 Have	                                     
+
+Rule engine				Have									 Have	
+
+Process designer		Have									 Have	
+
+Task manager			Have									 Have	
+
+Process management console 		basic function						 All functions	The more functions of the enterprise version than the community version are described below
+
+Process modeling collaboration tool		No							Have	For multi-person collaborative design process
+
+Process monitoring and early warning	No							Have	An important function of BPM, which is required by large-scale
+ enterprise process applications, can be developed based on the open source version, which is technically difficult and requires a lot of work
+ 
+Contractual guarantee					No							Have	That is, the community version does not promise any guarantee
+
+724365 service support					No							Have	
+
+Service provided by patch package		No							Have	
+
+Consulting and training services	    No							Have	
+
+
+2) Overview of camunda arch - Refer 4th point of doc.
+
+3) BPMN - Business Process Model and Notation (BPMN) is the global standard for process modeling. BPMN is not owned by a certain enterprise but by an institution (OMG), which is already established through other world-wide standards, e.g., UML. The standard is supported by many software products; you are less dependent on any particular vendor’s products.
+
+BPMN 2.0 version is going on. 
+
+Not all symbols are availabale with camunda.
+
+https://camunda.com/bpmn/  , https://camunda.com/bpmn/reference/ - Detail BPNM notation
+click on wrench button  to explore below 
+
+a) Event -   Start Event, Stop Event, Intermediate event (like a milestone), Message event, Timer, Conditional, 
+
+Compensation (We execute tasks in our processes that sometimes have to be canceled later under certain circumstances. Typical examples are: Booking a train or airline ticket,
+Reserving a rental car -> Attached compensation events connect through association and not through sequence flows.)
+
+b) Gateway - Exclusive (Yes or No - X sign XOR -> 1 XOR 1 = 0 , 0 XOR 1 = 1, 0 XOR 0 = 0), Parallel (asynch running both flow - + sign), Inclusive (default and additional flow or wait for multiple flow to complete) 
+
+c) Task - Service, Business Rule, User (Process engine expects some update in value by user himself), Subprocess (with in task, another subprocess), Manual (Process engine doesn't expect any update in process variable value), 
+
+Receive (don't get confused by email notation, it simple means getting input through any medium of message like queue etc. Sooner or later, most processes require communication, which can be represented in BPMN by means of the message event. You’ll recognize it as the small envelope. The meaning of “message” in BPMN is not restricted to letters, e-mails, or calls. Any action that refers to a specific addressee and represents or contains information for the addressee is a message.)
+
+	c.1) Task Markers - Loop (do-while), Multiple Instance (A multiple task instantiates repeatedly and can be executed in sequence or in parallel)
+	c.2) Intermediate Signal event can be aligned with tasks by dragging to it.
+	
+d) Expanded subprocess - separate subprocess
+
+e) Pools and Lanes - Pools are also know as process having tasks, subprocess, events etc. Lanes/Swim lanes represent process boundaries -> task assigned for a particular lane.
+Dotted line comes b/w 2 pools when connected - this is known as process collaboration.
+
+f) Global subprocess referred in parent process. This is acheived by making different independent Pools. You can think of the participant responsible for a subprocess as a service provider for various parent processes. It is a like a shared service center. Impementation it techincally is different discussion.
+
+g) Catching events are events with a defined trigger. We consider that they take place once the trigger has activated or fired.
+
+h) Throwing events are assumed by BPMN to trigger themselves instead of reacting to a trigger.
+
+i) Error event are represented by flash symbol.
+
+j) Signal - Signals are similar to messages, which is why you can model them in BPMN as events just as you can with messages. The symbol for a signal is a triangle. The essential difference between a signal and a message is that that latter is always addressed to a specific recipient. (An e-mail contains the e-mail address of the recipient, a call starts with dialing the telephone number, and so on.) In contrast, a signal is more like a newspaper advertisement or a television commercial. It is relatively undirected. Anyone who receives the signal and wants to react may do so.
+
+
+4) Camunda cloud - Horizontal scalabale (adding more machines).  It is ideal for cloud application use cases such as microservices-based applications and integrates seamlessly with best-in-class cloud components.
+
+5) Software as a service is a software licensing and delivery model in which software is licensed on a subscription basis and is centrally hosted.
+ SaaS applications are also known as on-demand software and Web-based/Web-hosted software. Like HRMS system, Payoll.
+ 
+ 
+6) Architecture - Refer point 5 of doc
+
+Camunda Platform is a Java-based framework. The main components are written in Java and we have a general focus on providing Java developers with the tools they need for designing, implementing and running business processes and workflows on the JVM. Nevertheless, we also want to make the process engine technology available to non-Java developers. This is why Camunda Platform also provides a REST API which allows you to build applications connecting to a remote process engine.
+
+a) Process Engine Public API: Service-oriented API (not REST API) allowing Java applications to interact with the process engine. The different responsibilities of the process engine (i.e., Process Repository, Runtime Process Interaction, Task Management, …) are separated into individual services. The public API features a command-style access pattern: Threads entering the process engine are routed through a Command Interceptor which is used for setting up Thread Context such as Transactions.
+
+b) BPMN 2.0 Core Engine: This is the core of the process engine. It features a lightweight execution engine for graph structures (PVM - Process Virtual Machine), a BPMN 2.0 parser which transforms BPMN 2.0 XML files into Java Objects and a set of BPMN Behavior implementations (providing the implementation for BPMN 2.0 constructs such as Gateways or Service Tasks).
+
+c) Job Executor: The Job Executor is responsible for processing asynchronous background work such as Timers or asynchronous continuations in a process.
+
+d) The Persistence Layer: The process engine features a persistence layer responsible for persisting process instance state to a relational database. We use the MyBatis mapping engine for object relational mapping.
+
+7) Multitenancy is a reference to the mode of operation of software where multiple independent instances of one or multiple applications operate in a shared environment. The instances (tenants) are logically isolated, but physically integrated. To serve multiple, independent parties with one Camunda installation, the process engine supports multi-tenancy.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/process-engine-bootstrapping/
+
+1) BPNM Process Engine - Bootstrapping -> Means How we want to use process engine.
+	a) Managed - Like in workflow. Manage process engine as part of application.
+				 How to configure/setup Process Engine in managed
+				 
+				a.1) Java API
+				 ProcessEngine processEngine = ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration()
+				.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_FALSE)
+				.setJdbcUrl("jdbc:h2:mem:my-own-db;DB_CLOSE_DELAY=1000")
+				.setJobExecutorActivate(true)
+				.buildProcessEngine();
+				
+				 a.2) XML Config
+				 camunda.cfg.XML
+				<bean id="processEngineConfiguration" class="org.camunda.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+
+				<property name="jdbcUrl" value="jdbc:h2:mem:camunda;DB_CLOSE_DELAY=1000" />
+				<property name="jdbcDriver" value="org.h2.Driver" />
+				<property name="jdbcUsername" value="sa" />
+				<property name="jdbcPassword" value="" />
+
+				<property name="databaseSchemaUpdate" value="true" />
+
+				<property name="jobExecutorActivate" value="false" />
+
+				<property name="mailServerHost" value="mail.my-corp.com" />
+				<property name="mailServerPort" value="5025" />
+				</bean>
+	
+				In code
+				ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine()
+				 
+				a.3) Spring
+					<dependencyManagement>
+					<dependencies>
+						<dependency>
+						<groupId>org.camunda.bpm</groupId>
+						<artifactId>camunda-bom</artifactId>
+						<version>7.15.0</version>
+						<scope>import</scope>
+						<type>pom</type>
+						</dependency>
+						</dependencies>
+					</dependencyManagement>
+				 
+	b) Shared - Container(Tomcat, JBoss or IBM WebSphere) base approach. These servers will manage process engine.
+	
+	Full Distribution List (Camunda) means For example, if you download the tomcat camunda package distribution, tomcat itself is included and the Camunda binaries (process engine and webapplications) are pre-installed into the container. 
+	bpm-platform.xml resides in container and can be used to configure  process engines and the job executor
+	
+2) Bit of detail on ProcessEngine Classes
+	Main class is - public abstract class ProcessEngineConfiguration . This is a bean.
+	There are multiple subclasses available that can be used to define the process engine configuration.
+	
+	a) org.camunda.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration - The process engine is used in a standalone way. The engine itself will take care of the transactions.
+	
+	b) org.camunda.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration
+	This is a convenience class for unit testing purposes. The engine itself will take care of the transactions. An H2 in-memory database is used by default. The database will be created and dropped when the engine boots and shuts down.
+	
+	c) org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration
+	   To be used when the process engine is used in a Spring environment.
+	
+	d) org.camunda.bpm.engine.impl.cfg.JtaProcessEngineConfiguration
+	   To be used when the engine runs in standalone mode, with JTA transactions.
+	   Java™ Transaction API - for distributed transcation. Distributed system.
+	   A distributed system, also known as distributed computing, is a system with multiple components located on different machines that communicate and coordinate actions in order to appear as a single coherent system to the end-user
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/process-engine-api/
+1) Camunda Services API - The Java API is the most common way of interacting with the engine. See pic 7 in doc.
+	
+	
+	a) The RepositoryService is probably the first service needed when working with the Camunda engine. This service offers operations for managing and manipulating deployments and process definitions.Query on deployments and process definitions known to the engine.
+	
+	b) While the RepositoryService is about static information (i.e., data that doesn’t change, or at least not a lot), the RuntimeService is quite the opposite. It deals with starting new process instances of process definitions. The RuntimeService is also the service which is used to retrieve and store process variables. This is data specific to the given process instance and can be used by various constructs in the process.
+	
+	c) Everything around tasks is grouped in the TaskService. Querying tasks assigned to users or groups.Manipulating to which user a task is assigned or which users are in some way involved with the task.Claiming and completing a task. Claiming means that someone decided to be the assignee for the task, meaning that this user will complete the task. Completing means ‘doing the work of the tasks’. Typically this is filling in a form of sorts.
+	
+	d) The IdentityService is pretty simple. It allows the management (creation, update, deletion, querying, …) of groups and users.
+
+2) Query API - While interacting with process engine, mostly we will be querying to know about processInstances, Tasks etc. Process representing one BPMN and multiple tasks inside that BPMN.
+
+To query data from the engine there are multiple possibilities:
+
+Java Query API: Fluent(Self Expalnatory) Java API to query engine entities (like ProcessInstances, Tasks, …).
+REST Query API: REST API to query engine entities (like ProcessInstances, Tasks, …).
+Native Queries: Provide own SQL queries to retrieve engine entities (like ProcessInstances, Tasks, …) if the Query API lacks the possibilities you need (e.g., OR conditions).
+
+ex - Java api
+List<Task> tasks = taskService.createTaskQuery()
+  .taskAssignee("kermit")
+  .processVariableValueEquals("orderId", "0815")
+  .orderByDueDate().asc()
+  .list();
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/process-engine-concepts/
+
+Core Concepts of Process engine
+
+1) Process engine - In Camunda Platform you can deploy processes to the process engine in BPMN 2.0 XML format. The XML files are parsed and transformed into a process definition graph structure. This graph structure is executed by the process engine.
+
+2) Process Defination - defines the structure of a process.
+
+3) Query for Process Defination
+List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()
+    .processDefinitionKey("invoice")
+    .orderByProcessDefinitionVersion()
+    .asc()
+    .list();
+	
+	key is the id of bpnm file. If you deploy multiple processes with the same key, they are treated as individual versions of the same process definition by the process engine. 
+
+4) A process instance is an individual execution of a process definition.
+	Map<String, Object> variables = new HashMap<String,Object>();
+	variables.put("creditor", "Nice Pizza Inc.");
+	ProcessInstance instance = runtimeService.startProcessInstanceByKey("invoice", variables);
+
+5) Executions - With parallel gateway, multiple execution path can be active at same time.
+
+	runtimeService.createExecutionQuery()
+    .processInstanceId(someId)
+    .list();
+	The above query returns all executions for a given process instance.
+	
+6) Activity Instance
+   Execution can be taken as process by process , Activity can be taken as independent subprocess and state oriented.
+   In general, there is a n-1 relationship between Executions and ActivityInstances, i.e., at a given point in time, an activity instance can be linked to multiple executions. In addition, it is not guaranteed that the same execution that started a given activity instance will also end it. The process engine performs several internal optimizations concerning the compacting of the execution tree which might lead to executions being reordered and pruned. This can lead to situations where a given execution starts an activity instance but another execution ends it.
+
+	ActivityInstance rootActivityInstance = runtimeService.getActivityInstance(processInstance.getProcessInstanceId());
+
+7) Jobs
+The Camunda process engine includes a component named the Job Executor. The Job Executor is a scheduling component, responsible for performing asynchronous background work. Consider the example of a Timer Event: whenever the process engine reaches the timer event, it will stop execution, persist the current state to the database and create a job to resume execution in the future.
+
+managementService.createJobQuery()
+  .duedateHigherThan(someDate)
+  .list()
+  
+managementservice is used for same.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/variables/
+ 
+ 1) To set and retrieve variables, the process engine offers a Java API that allows setting of variables from Java objects and retrieving them in the same form. Internally, the engine persists variables to the database and therefore applies serialization.
+	// Java Object API: Get Variable
+	Integer val1 = (Integer) execution.getVariable("val1");
+	
+	refer point 8 in doc.
+	
+ 2) Variable type - refer point 9 in doc
+ 
+ 3) Java object API to work on variables
+	com.example.Order order = new com.example.Order();
+runtimeService.setVariable(execution.getId(), "order", order);
+
+com.example.Order retrievedOrder = (com.example.Order) runtimeService.getVariable(execution.getId(), "order");
+
+4) Input/output variable to take as param for task etc
+<camunda:inputParameter name="x">
+    <camunda:list>
+      <camunda:value>a</camunda:value>
+      <camunda:value>${1 + 1}</camunda:value>
+      <camunda:list>
+        <camunda:value>1</camunda:value>
+        <camunda:value>2</camunda:value>
+        <camunda:value>3</camunda:value>
+      </camunda:list>
+    </camunda:list>
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/process-instance-modification/
+
+1) While the process model contains sequence flows that define in which order activities must be executed, sometimes it is desired to flexibly start an activity again or cancel a running activity. For example, this can be useful when the process model contains an error, such as a wrong sequence flow condition, and running process instances need to be corrected. Use cases for this API may be
+
+ a) Repairing process instances in which some steps have to be repeated or skipped
+ b) Migrating process instances from one version of a process definition to another
+ 
+2) Example - Check process model on UI before reading below
+
+  Suppose the process instance has the following activity instance state:
+
+	ProcessInstance
+		Decline Loan Application
+		
+	Now the worker performing the task Decline Loan Application recognizes an error in the evaluation result and comes to the conclusion that the application should be accepted nevertheless.
+	
+ ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
+runtimeService.createProcessInstanceModification(processInstance.getId())
+  .startBeforeActivity("acceptLoanApplication")
+  .cancelAllForActivity("declineLoanApplication")
+  .execute();
+  
+  This command first starts execution before the activity Accept Loan Application until a wait state - the creation of the user task in this case - is reached. After that, it cancels the running instance of the activity Decline Loan Application. In the worker’s task list, the Decline task has been removed and an Accept task has appeared. 
+  
+  The resulting activity instance state is:
+
+ProcessInstance
+  Accept Loan Application
+  
+------------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/process-instance-restart/
+
+1) We may need to restart a process due to some exception which resulted in process to terminate in erroneous behaviour. Restart can be done coz Camunda maintains historical data provided history level is set to FULL
+
+runtimeService.restartProcessInstance(processInstance.getProcessDefinitionId())
+	.startBeforeActivity("receivePayment")
+	.startBeforeActivity("shipOrder")
+	.processInstanceIds(processInstance.getId())
+	.execute();
+
+2) The process instance has been restarted with the last set of variables. However, only global variables are set in the restarted process instance. Local variables can be set manually, for example by calling RuntimeService.setVariableLocal(...).
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/delegation-code/
+
+1) Delegation Code allows you to execute external Java code, scripts or evaluate expressions when certain events occur during process execution.
+
+There are different types of Delegation Code:
+
+Java Delegates can be attached to a BPMN Service Task.
+Delegate Variable Mapping can be attached to a Call Activity.
+Execution Listeners can be attached to any event within the normal token flow, e.g., starting a process instance or entering an activity.
+Task Listeners can be attached to events within the user task lifecycle, e.g., creation or completion of a user task.
+
+2) Java Delegate
+ public class ToUppercase implements JavaDelegate {
+
+    public void execute(DelegateExecution execution) throws Exception {
+      String var = (String) execution.getVariable("input");
+      var = var.toUpperCase();
+      execution.setVariable("input", var);
+    }
+
+}
+
+In service task, Implementation -> Java Class
+
+3) The classes that are referenced in the process definition (i.e., by using camunda:class ) are NOT instantiated during deployment. Only when a process execution arrives at the point in the process where the class is used for the first time, an instance of that class will be created. 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/expression-language/
+
+1) 	EL - Camunda uses JUEL (Java unified expression language)
+
+JUEL - The expression language introduced in JSP 2.0 allows page authors to use simple expressions to dynamically read data from JavaBeans components. For example, the test attribute of the following conditional tag is supplied with an EL expression that compares the number of items in the session-scoped bean named cart with 0.
+
+<c:if test="${sessionScope.cart.numberOfItems > 0}">
+  ...
+</c:if>
+
+2) Within Camunda Platform, EL can be used in many circumstances to evaluate small script-like expressions.
+
+3) Camunda.bpnm
+XML file
+
+    <userTask id="userTask">
+      <extensionElements>
+        <!-- task listener which calls a method of a bean with current task as parameter -->
+        <camunda:taskListener event="complete" expression="${myBean.taskDone(task)}" />
+      </extensionElements>
+    </userTask>
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/scripting/
+
+1) Script language implementations - JavaScript, Groovy
+
+2) All scripting languages are programming languages. The scripting language is basically a language where instructions are written for a run time environment. They do not require the compilation step and are rather interpreted. It brings new functions to applications and glue complex system together. A scripting language is a programming language designed for integrating and communicating with other programming languages.
+
+Example 
+bash: It is a scripting language to work in the Linux interface. It is a lot easier to use bash to create scripts than other programming languages. It describes the tools to use and code in the command line and create useful reusable scripts and conserve documentation for other people to work with.
+Node js: It is a framework to write network applications using JavaScript. Corporate users of Node.js include IBM, LinkedIn, Microsoft, Netflix, PayPal, Yahoo for real-time web applications.
+Python: It is easy, free and open source. It supports procedure-oriented programming and object-oriented programming. Python is an interpreted language with dynamic semantics and huge lines of code are scripted and is currently the most hyped language among developers.
+
+3) Camunda Platform supports scripting with JSR-223 compatible script engine implementations.
+
+4) <sequenceFlow id="sequenceFlow1" sourceRef="start" targetRef="task"/>
+    <scriptTask id="task" name="Groovy Script" scriptFormat="groovy">
+      <script>
+        <![CDATA[
+        sum = 0
+
+        for ( i in inputArray ) {
+          sum += i
+        }
+
+        println "Sum: " + sum
+        ]]>
+      </script>
+    </scriptTask>
+	
+	
+------------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/templating/
+
+1) A template engine enables you to use static template files in your application. At runtime, the template engine replaces variables in a template file with actual values, and transforms the template into an HTML file sent to the client. This approach makes it easier to design an HTML page.
+
+2) Camunda uses FreeMarker
+
+3) Apache FreeMarker™ is a template engine: a Java library to generate text output (HTML web pages, e-mails, configuration files, source code, etc.) based on templates and changing data.
+
+Refer point 10 in doc.
+
+4) <scriptTask id="templateScript" scriptFormat="freemarker" camunda:resultVariable="text">
+  <script>
+    Dear ${customer},
+
+    thank you for working with Camunda Platform ${version}.
+
+    Greetings,
+    Camunda Developers
+  </script>
+</scriptTask>
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/external-tasks/
+
+1) The process engine supports two ways of executing service tasks:
+
+Internal Service tasks: Synchronous invocation of code deployed along with a process application - Using Delegation code or Script
+External tasks: Providing a unit of work in a list that can be polled by workers. Sample done in quick start on top. Publish and subscribe.
+Worker threads lock.
+
+2) Code
+List<LockedExternalTask> tasks = externalTaskService.fetchAndLock(10, "externalWorkerId")
+  .topic("AddressValidation", 60L * 1000L)
+  .execute();
+
+for (LockedExternalTask task : tasks) {
+  try {
+    String topic = task.getTopicName();
+
+    // work on task for that topic
+    ...
+
+    // if the work is successful, mark the task as completed
+    if(success) {
+      externalTaskService.complete(task.getId(), variables);
+    }
+    else {
+      // if the work was not successful, mark it as failed
+      externalTaskService.handleFailure(
+        task.getId(),
+        "externalWorkerId",
+        "Address could not be validated: Address database not reachable",
+        1, 10L * 60L * 1000L);
+    }
+  }
+  catch(Exception e) {
+    //... handle exception
+  }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/connectors/
+
+1) Connector - simple API for connecting HTTP services and other things.
+
+2) Camunda Connect provides a HTTP and a SOAP HTTP connector.
+
+3) Can be used to intercept request
+connector.addRequestInterceptor(interceptor).createRequest();
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/process-versioning/
+
+1) Business Processes are by nature long running. The process instances will maybe last for weeks, or months. In the meantime the state of the process instance is stored to the database. But sooner or later you might want to change the process definition even if there are still running instances.
+
+This is supported by the process engine:
+
+If you redeploy a changed process definition, you get a new version in the database.
+Running process instances will continue to run in the version they were started in.
+New process instances will run in the new version - unless specified explicitly.
+Support for migrating process instances to new a version is supported within certain limits.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/process-instance-migration/
+
+1) Whenever a new version of a process definition is deployed, existing process instances that run on previous versions are not affected. That means, the new process definition does not apply to them automatically.
+
+2) To implement execution of older instnace to new one :-
+MigrationPlan API
+
+MigrationPlan migrationPlan = processEngine.getRuntimeService()
+  .createMigrationPlan("exampleProcess:1", "exampleProcess:2")
+  .mapActivities("assessCreditWorthiness", "assessCreditWorthiness")
+  .mapActivities("validateAddress", "validatePostalAddress")
+  .mapActivities("archiveApplication", "archiveApplication")
+  .build();
+  
+ runtimeService.newMigration(migrationPlan)
+  .processInstanceIds(processInstanceIds)
+  .execute();
+
+3) Since there is a migration instruction for these activity instances they are migrated. The entities that comprise this instance are updated to reference the new activity and process definition. Besides that, activity instances, task instances and variable instances are preserved.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/database/database-schema/
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/database/database-configuration/
+
+1) DBSchema details and how to configure
+
+<property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/camunda;DB_CLOSE_DELAY=1000" />
+<property name="jdbcDriver" value="org.h2.Driver" />
+<property name="jdbcUsername" value="sa" />
+<property name="jdbcPassword" value="" />
+
+2) Internally uses MyBatis. It is an open source, lightweight, persistence framework. It is an alternative to JDBC and Hibernate. It automates the mapping between SQL databases and objects in Java, . NET, and Ruby on Rails.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/history/
+1) The process engine maintains the state of running process instances inside the database. This includes writing (1.) the state of a process instance to the database as it reaches a wait state and reading 
+
+2) The state as process execution continues. We call this database the runtime database. 
+
+3)In addition to maintaining the runtime state, the process engine creates an audit log providing audit information about executed process instances. We call this event stream the history event stream 
+
+4)The individual events which make up this event stream are called History Events and contain data about executed process instances, activity instances, changed process variables and so forth. In the default configuration, the process engine will simply write  this event stream to the history database. The HistoryService API allows querying this database.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+https://docs.camunda.org/manual/7.15/user-guide/process-engine/deployment-cache/
+
+1) All process definitions are cached (after they have been parsed) to avoid polling the database every time a process definition is needed and because process definition data doesn’t change. This reduces the latency of referencing the process definitions and thus improves the performance of the system.
+
+2) If one has many process definitions, the cache might occupy a large amount of memory and the capacity of the working memory may reach its limits.
+
+3) However, if one still meets out of memory issues, it can be necessary to lower the maximum capacity of the cache. 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Rest under Process Engine tab can be read for specific topic when required
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+https://docs.camunda.org/manual/7.15/reference/
+
+This section is guide for BPMN, DMN and CMMN
+Camunda SPin is library to play around with JSON and XML Processing.
+REST API is another main thing covered under this section.

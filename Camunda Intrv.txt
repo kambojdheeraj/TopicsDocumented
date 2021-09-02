@@ -1,0 +1,263 @@
+https://camundatraining.com/camunda-interview
+
+1) Your role in the team.
+
+2) Agile
+   Agile methodology - software dev methodology
+
+The most popular agile framework is called scrum. It focuses on a delivery cadence called a sprint and meeting structures that include the following:
+
+Planning — where sprint priorities are identified
+Commitment — where the team reviews a list or backlog of user stories and decides how much work can be done in the sprint’s duration
+Daily standup meetings — so teams can communicate updates on their development status and strategies)
+Sprints end with a demo meeting where the functionality is shown to the product owner, followed by a retrospective meeting where the team discusses what went well and what needs improvement in their process.
+
+Many organizations employ scrum masters or coaches to help teams manage the scrum process.
+
+Some organizations adopt a hybrid agile and waterfall approach, using agile processes for new applications and waterfall for legacy ones.
+
+More advanced teams adopt test-driven development and automation to ensure the underlying functionality delivers the expected results.
+
+JIRa dashboard as Kanban board.
+
+3) Camunda cost benefit for team
+    Polaris (consultant was paid) + 3-4 million dollar for licensing fees, infra and resouce over 5year span
+
+4) Why camunda
+Company famous for our Java BPMN engine,
+
+a) orchestrate and automate complex processes in a new way.
+orchestrate - synoymns  (organize, plan, prepare, project, scheme (out), set up, shape, strategize)
+https://www.bmc.com/blogs/it-orchestration-vs-automation-whats-the-difference/
+The definition of automation is setting up a single task to run on its own—automating one task.
+Orchestration is automating many tasks together. It’s automation not of a single task but an entire IT-driven process. Automation many tasks as a process or workflow.
+The goal of orchestration is to streamline and optimize frequent, repeatable processes.
+Devops - CICD is orchestration on cloud.
+
+b) automate business process. Like Pizza creation to order to delivery.
+
+5) Business Process Model and Notation (BPMN) - https://camunda.com/bpmn/
+Business Process Modeling Notation (BPMN) is a flow chart method that models the steps of a planned business process from end to end. A key to Business Process Management, it visually depicts a detailed sequence of business activities and information flows needed to complete a process.
+
+The key to BPMN’s acceptance by business users is its outward similarity to traditional swimlane flowcharts: boxes representing actions, connected by arrows representing sequence in time, arranged in swimlanes indicating the actors performing the actions.  That basic look was a conscious choice by BPMN’s creators, and it has worked very well.
+
+6) 3) DMN - Decision Model and Notation - https://camunda.com/dmn/
+Business analysts can model the rules that lead to a decision in easy to read tables, and those tables can be executed directly by a decision engine (like Camunda). This minimizes the risk of misunderstandings between business analysts and developers, and it even allows rapid changes in production.
+DMN is not owned by a certain enterprise but by an institution (OMG), which is already established through other world-wide standards, e.g., BPMN and UML. The DMN standard is supported by several software products; you are less dependent on any particular vendor’s products.
+
+Simple decision table. Its complementary to BPMN .
+
+BPMN includes a so-called business rule task, which should better be named decision task in a later version of the BPMN standard.
+This is not BPMN Gateway. If we have to use gateway then it will BPMN verbose and complex.
+
+4) Case Management Model and Notation (CMMN) - https://www.visual-paradigm.com/guide/cmmn/what-is-cmmn/
+Here is some reasons why we need CMMN in additional to BPMN:
+
+Traditionally, the research and practice of business information systems focuses on well-structured business processes. However, many business processes are difficult to model.
+That is especially true for knowledge-intensive tasks such as incident management, consulting or sales. In fact, many activities are started and conducted in an ad-hoc way rather than being planned in advance.
+This is especially the case for knowledge-intensive or project-based activities, which often represent the core competencies of an organization.
+
+5) Camunda strength vs weakness
+
+Embedding a first-class process capability in your application.
+Providing a standards-based modeling capability, backed by a standards-native engine.
+Great support for developers and a developer community.
+Great set of comprehensive APIs across a number of different design points
+All of the code is available in GitHub as a great open source project with Apache licenses.
+Comprehensive documentation of code and APIs and usage.
+Innovative spin-offs like Zeebe.
+Support for micro-services orchestration.
+Support for both embedded and stand alone usage scenarios.
+The company is innovative and focused on this space.
+
+Cons
+Camunda expects that you will develop your own user interfaces. This is either a benefit or a barrier depending on your perspective on packaged UI.
+As an open source vendor, Camunda is under-covered in analyst reports.
+
+6) RPA - robotic process automation
+
+7) Camunda Optimize - version for dashboard, reports, alerts
+Simply try your own Data
+Optimize is very easy to set up and non-intrusive to your Camunda environment: It will simply connect to the Camunda REST API and import the historical data, storing it in a big data repository (Elasticsearch) that allows for powerful queries. After the initial import, Optimize will pull new data from Camunda in configurable intervals providing you with up-to-date information in soft real-time. Deleting data in Camunda won’t automatically delete the data in Optimize, so you can create reports based on historic data that has been removed from Camunda before.
+
+The data import itself can be customized, which allows you to enrich the data in Optimize with information that you can pull from any source available to you. For example, you can use this mechanism to query additional data that is related to the process instances and import that data as variables in Optimize in order to use them as filter parameters in your reports.
+
+
+8) Camunda testing - mockito, Integration testing - cucumber
+
+9) Why BPMN
+BPMN software allows business process designers to facilitate: Communication between technical and non-technical stakeholders about business processes. Comprehensive understanding and knowledge gaps of the business process. A digital representation of the process on a software platform.
+BPMN 2.0. - latest version
+
+10) Camunda community version 7.6 used by us.
+
+11) 3 processes - KYC, MTU, Matching
+Service task, User task, Gateway, sequence arrow, swim lanes, process variable, task variable, expression language
+start/stop/message/error events
+
+An intermediate event is any event that occurs between a start and an end event. The intermediate event circle has a double line, and the event can catch or throw information - like sending mail
+Timer boundary event - task/activity have timer on the boundary which trigger event to call any other task or subprocess.
+
+A pool is usually used to represent a process in an organization, a lane, on the other hand, represents an activity of a department within that organization. By using pool and lane, you can identify how a process is done and which department performs that activity.
+
+Code Flow
+
+1) O360 sender portal -> /subscriber -> webserver 001 002-> route -> websubscriber-api(data display) -> Queries (Dashboard, chart), subscriber_entity query
+2) O360 -> Kyc-APi -> routing xml -> request proxy filter
+3) Task -> Active Mq
+4) KYC-api (Processing) -> new entity, batch upload -> KYC DB
+5) KYC -> SQS
+6) SQS -> consumed by workflow
+
+Data-API
+Quartz oracle scheduler -> Spring scheduler
+REST module
+KYC-api (Storage of data KYC DB) -> rabbitmq
+ External data aggregator module
+
+webserver -> Load balancer(sticky session)
+
+node 1 and node 2 and node 3 and node 4
+
+JSON
+{
+   "caseId":1807247136383617,
+   "caseType":"Full Review",
+   "product":"KYC",
+   "operationType":"CREATE",
+   "processMap":{
+      "CASE_METADATA":{
+         "caseId":1807247136383617,
+         "caseType":"Full Review",
+         "legalName":"Feb 3 Test Entity",
+         "country":"GB",
+         "externalDataRequired":"Encompass"
+      },
+      "WORKFLOW_ID":"KYC-14",
+      "PRODUCT":"KYC",
+      "CASE_PROFILE_DATA":{
+         "caseId":"1807247136383617",
+         "caseType":"FullReview",
+         "createdDT":"2020-02-03T10:11:53.000Z",
+         "dueDT":"2020-05-03T00:00:00.000Z",
+         "kycProfile":{
+            "entityClass":"Company",
+            "attributes":[
+               {
+                  "id":"Company",
+                  "bookingJurisdiction":"Base"
+               },
+               {
+                  "id":"Company.contact",
+                  "index":0,
+                  "bookingJurisdiction":"Base"
+               },
+               {
+                  "id":"Company.entityType",
+                  "bookingJurisdiction":"Base",
+                  "value":"2"
+               },
+               {
+                  "id":"Company.formation",
+                  "bookingJurisdiction":"Base"
+               },
+               {
+                  "id":"Company.formation.incorporationCountry",
+                  "bookingJurisdiction":"Base",
+                  "value":"GB"
+               },
+               {
+                  "id":"Company.legalName",
+                  "bookingJurisdiction":"Base",
+                  "value":"Feb 3 Test Entity"
+               },
+               {
+                  "id":"entity.upload.batchId",
+                  "bookingJurisdiction":"Base",
+                  "value":"2194090"
+               }
+            ],
+            "MEI":"PLEASE_CREATE"
+         },
+         "relatedProfiles":[
+           
+         ]
+      },
+      "CASE_SUBSCRIPTIONS":[
+         {
+            "subscriberId":"500",
+            "subscriberName":"Markit Genpact KYC Services",
+            "subscriptionLevel":"Vantage",
+            "bookingJurisdictionList":"United Kingdom|United States",
+            "bookingJurisdictionLevelList":"Base|Base",
+            "refreshCycle":"3",
+            "newOnboardingRequest":"No",
+            "bcbqAddOn":"No",
+            "externalDataRequired":"Encompass"
+         }
+      ],
+      "CASE_DOCUMENTS":[
+         
+      ],
+      "OPERATION_TYPE":"CREATE"
+   }
+}
+
+Workflow code
+1) KycListener
+2) POM entries for camunda spring boot dependencies
+3) Camunda config for postgres tables
+#Camunda Configuration
+camunda.bpm.admin-user.id=kermit
+camunda.bpm.admin-user.password=superSecret
+camunda.bpm.admin-user.firstName=Kermit
+camunda.bpm.filter.create=All tasks
+camunda.bpm.history-level=NONE
+camunda.bpm.database.type=postgres
+camunda.bpm.table-prefix=ngp_camunda.
+
+4) flywaydb - versioning
+5) BPNM deploy through REST API which will put entries in outofbox tables in camunda
+select * from ngp_camunda.ngp_product_key; --process_id -> KYC_FULLREVIEW_V2
+select * from ngp_camunda.act_re_procdef; --
+select * from ngp_camunda.act_re_deployment;
+select * from ngp_camunda.act_ge_bytearray;
+6) We have maintained dn->migration structure so that camunda outofbox tables doesn't create everytime.
+7) User service API -> Process Engine API
+8) Camunda aPI -> to set process key and variables -> runtimeService.startProcessInstanceByKey(builder.getProcessDefKey(),
+builder.getInputMap());
+9) Frequent used tables for continuous debugging
+select * from act_ru_execution;
+select * from act_ru_task where proc_inst_id_='82274f2d-995b-11eb-8ce2-0242ac110002';--using proc_inst_id, to find at which step
+select * from act_ru_variable where name_ = 'wfCaseId' and text_='2179903766255886';
+select * from act_hi_varinst;
+select * from act_ru_incident; - for exception
+
+10) Expression language
+11) Common listener to update elastic search
+
+
+
+Workflow Build
+Import maven project -> maven clean install ->
+
+
+AWS -> ECS -> ngp-dev-capability
+cloudwatch -> Loggroup ->ngp-prod-capability-logs
+cloudwatch -> Loggroup ->imb-prod-services-logs
+
+Used SDK over API
+APIs facilitate and allow interaction between applications, but they alone are not enough to create a brand new app. In other words, an API might be better for your project if you are looking to add a few specific features. If you are starting a completely new project, an SDK will provide the tools you need to get up and running.
+
+12) Testing framework
+Selenium is a portable framework for testing web applications. Selenium provides a playback tool for authoring functional tests without the need to learn a test scripting language.
+UI based testing - Play book runs. Take input from UI.
+WebDriver driver;
+Cucumber - case.feature
+
+13) Netflix Zuul to forward requests to the service application. You will also see how to use Zuul to filter requests that are made through the proxy service.
+
+14) Resilience - for retry and time out APIS
+
+15) Camunda BPM: A BPMN workflow engine that persists state via a relational database. The engine itself is stateless and if you cluster the engine all nodes meet in the database.
+Zeebe: A BPMN workflow engine that persists state on its own (kind of event sourcing). Zeebe forms an own-distributed system and replicates its state to other nodes using a RAFT protocol. If you want to learn more about it, check out Zeebe.io — a horizontally scalable distributed workflow engine. - Camunda cloud

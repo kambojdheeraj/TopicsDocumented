@@ -1,0 +1,47 @@
+Day1
+
+Project structure
+
+Module.ts -> collection of component (declaration)
+--component	(can have more components)
+	--html
+	--scss
+	--ts
+
+
+
+
+Day2
+
+Bootstrap - 3rd party library for css like date picker etc - https://ng-bootstrap.github.io/#/home - UI styling
+Directives - ngif, ngcalss (run time put this class) in html. DOM manipulation with if else chnaging view in html.
+oneway binding - changing value in .ts will reflect on html
+twoway binding - changing value either on .ts or on html will be reflected at both places
+interpolation
+propertybinding
+pipes
+services
+
+Day 3
+Debug
+Communication between components
+	-services
+	-eventemitters
+	-subject
+		-behaviour -> to put default value of subject
+
+Observable -> Scenario - to fetch
+
+Day 4
+Rxjs
+Typescript
+ES6
+proxy.conf.json - to point to environment
+
+
+
+
+Day 5	
+Forms - like login page
+Template - simple one. NGModel. Form
+Reactive -   For complex form. Workflow - Reactive form like case detail. FormGroup, Form Validation, Form Control. Setvalue - all Formfields are set. PatchValue - Update on chunks.
