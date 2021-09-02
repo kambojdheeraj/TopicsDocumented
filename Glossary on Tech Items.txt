@@ -2,7 +2,8 @@
  <servlet>
         <servlet-name>redteam</servlet-name>
         <servlet-class>mysite.server.TeamServlet</servlet-class>
-        <init-param>
+        
+<init-param>
             <param-name>teamColor</param-name>
             <param-value>red</param-value>
         </init-param>
