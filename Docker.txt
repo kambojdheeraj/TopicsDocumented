@@ -1,0 +1,724 @@
+Quick Start
+
+1) Docker - Docker is container based technology and containers are just user space of the operating system. 
+
+2) A Virtual Machine, on the other hand, is not based on container technology. They are made up of user space plus kernel space of an operating system. Under VMs, server hardware is virtualized.
+
+3) Purpose of Docker: Its primary focus is to automate the deployment of applications inside software containers and the automation of operating system level virtualization on Linux. It's more lightweight than standard Containers and boots up in seconds.
+
+4) A fundamental difference between Kubernetes and Docker is that Kubernetes is meant to run across a cluster while Docker runs on a single node. Kubernetes is more extensive than Docker Swarm and is meant to coordinate clusters of nodes at scale in production in an efficient manner.
+
+5) Docker is a set of platform as a service (PaaS) products that use OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels. Because all of the containers share the services of a single operating system kernel, they use fewer resources than virtual machines.
+
+https://www.zdnet.com/article/what-is-docker-and-why-is-it-so-darn-popular/
+
+6) Docker - CI/CD development + support for cloud. Unlike VM which uses underlying hardware, docker shares hardware resource across container which you can also term as user space in windows or using Linux Kernel namespaces.
+
+7) Docker has become an early adopter in Continuous Integration and Continuous Deployment. By leveraging the right integration with source code control mechanism such as GIT, Jenkins can initiate a build process each time a developer commits his code. This process results in a new Docker Image which is instantly available across environment. Using Docker images(like APPn, APP server, Dependencies, Java SDK etc) , teams can build, share, and deploy their application quickly.
+
+https://www.cigniti.com/blog/need-use-dockers-ci-cd/
+
+Original author(s)	Solomon Hykes
+Developer(s)	Docker, Inc.
+Initial release	March 20, 2013; 8 years ago[1]
+
+On windows, docker uses WSL (Windows Subsystem for Linux (WSL) is a compatibility layer for running Linux binary executables (in ELF format) natively on Windows 10, Windows 11,[2] and Windows Server 2019.) feature of linux to run.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.docker.com/get-started/overview/
+
+1) Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.
+
+2) Scenario catered
+Consider the following example scenario:
+
+Your developers write code locally and share their work with their colleagues using Docker containers.
+They use Docker to push their applications into a test environment and execute automated and manual tests.
+When developers find bugs, they can fix them in the development environment and redeploy them to the test environment for testing and validation.
+When testing is complete, getting the fix to the customer is as simple as pushing the updated image to the production environment.
+
+3) Architecture - Refer point 6 of doc
+
+a) Docker uses a client-server architecture. 
+b) The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. 
+c) The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface. 
+d) Another Docker client is Docker Compose, that lets you work with applications consisting of a set of containers.
+e) Nginx - Load balancer
+
+f) Client - The Docker client (docker) is the primary way that many Docker users interact with Docker. When you use commands such as docker run, the client sends these commands to dockerd (daemon), which carries them out. The docker command uses the Docker API. The Docker client can communicate with more than one daemon.
+
+g) Daemon - The Docker daemon (dockerd) listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes. A daemon can also communicate with other daemons to manage Docker services.
+
+h) Docker registries
+A Docker registry stores Docker images. Docker Hub is a public registry that anyone can use, and Docker is configured to look for images on Docker Hub by default. You can even run your own private registry.
+
+i) Images - An image is a read-only template with instructions for creating a Docker container. Often, an image is based on another image, with some additional customization. For example, you may build an image which is based on the ubuntu image, but installs the Apache web server and your application, as well as the configuration details needed to make your application run.
+
+To build your own image, you create a Dockerfile with a simple syntax for defining the steps needed to create the image and run it. Each instruction in a Dockerfile creates a layer in the image. When you change the Dockerfile and rebuild the image, only those layers which have changed are rebuilt. This is part of what makes images so lightweight, small, and fast, when compared to other virtualization technologies.
+
+j) Containers
+A container is a runnable instance of an image. You can create, start, stop, move, or delete a container using the Docker API or CLI.
+
+k) Docker is build on Go programming language which is open source. It takes advantage of several features of the Linux kernel to deliver its functionality. Docker uses a technology called namespaces to provide the isolated workspace called the container. When you run a container, Docker creates a set of namespaces for that container.
+
+L) Example of a command and what it does behind scene
+
+$ docker run -i -t ubuntu /bin/bash
+When you run this command, the following happens (assuming you are using the default registry configuration):
+
+L.1 If you do not have the ubuntu image locally, Docker pulls it from your configured registry, as though you had run docker pull ubuntu manually.
+
+L.2 Docker creates a new container, as though you had run a docker container create command manually.
+
+L.3 Docker allocates a read-write filesystem to the container, as its final layer. This allows a running container to create or modify files and directories in its local filesystem.
+
+L.4 Docker creates a network interface to connect the container to the default network, since you did not specify any networking options. This includes assigning an IP address to the container. By default, containers can connect to external networks using the host machine’s network connection.
+
+L.5 Docker starts the container and executes /bin/bash. Because the container is running interactively and attached to your terminal (due to the -i and -t flags), you can provide input using your keyboard while the output is logged to your terminal.
+
+L.6 When you type exit to terminate the /bin/bash command, the container stops but is not removed. You can start it again or remove it.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.docker.com/get-started/ - Quick Start -> Sample Application (Gettin-Started/Todo APP), Update Application and Share
+
+Revision and videos
+https://youtu.be/iqqDU2crIEQ
+
+1) Problem
+Before Docker - Multiple Servers are installed and configuration are done. Each machine or VM - you have to install OS, Patches, Dependencies, Security Upgrades then install your application and configure it. Think same with Data center with 100+ Machines where you need to upgrade every machine and if anyone goes down then you have to troubleshoot it. YOu have to find out if any of ther server is down, you take it out and put another one in-place with again installing everything from OS to application code which is tedious, time consuming and error prone.
+
+2) Solution
+What if could bundle OS, Application Code, DB, All dependencies and binaries, configuration in one bundle and call it as image.
+Deploy multiple image on one server and if any image goes down then start another image. Even ugrades will also go as an image.
+
+
+
+3) To do exercise - install vsc and extension of remote container. Exercise related to node.js(JS runtime environment V8 engine) 
+   Github - clone -> https://github.com/docker/getting-started
+   Open file in VSC
+   Package.json -> dependecies are defined. Modules we want to use.
+   U in VSS means unmarked related to GIT
+   Open terminal in VSC -> prompt on current path of project
+   Yarn is a package manager for your code.
+   Node - Npm istalled in it, YArn installed in it
+   WorkDir - Will tell that all subsequent code can be taken from this file
+   ENV - Access the process running into the image
+   COPY package.json /code/package.json
+   apk - android package manager
+   g++ - GNU C++ complier
+   nocache - not letting docker using cache
+   ctrl + shift+ P in VSC to run some command tips available like changing terminal colour
+   
+4) Code - Dockerfile
+
+	From node: 12.16.2  //Telling from which base image, work need to be started
+	WorkDir /code
+	ENV PORT 80
+	COPY package.json /code/package.json
+	Run npm install
+	COPY ./code  // copy in image code directory local file
+	CMD ["node", "src/server.js"]  // Telling to run node and run the application server.js. Default command to run when starting a container from 	//this image.
+
+5) save file with no extension. Make it sure.
+Terminal path -> C:\Docker Project\getting-started\app
+
+docker build -t getting-started .
+
+-t -> tag for image file name
+. -> to find file in current path
+build -> new container image
+
+6) Run
+docker run -dp 3000:3000 getting-started
+
+-d -> detached mode
+-p -> mapping of port
+Remember the -d and -p flags? We’re running the new container in “detached” mode (in the background) and creating a mapping between the host’s port 3000 to the container’s port 3000. Without the port mapping, we wouldn’t be able to access the application.
+
+On docker dashboard, you will see the images you created.
+
+7) http://localhost:3000/ on browser and check.
+
+8) Cheat sheet
+a) docker build --help
+b) clear
+c) docker images
+d) docker ps
+e) docker ps -a // image which run before and current one too
+f) docker stop imagename // if we dont give image name then docker gives something.
+g) docker rm imagename
+h) docker run -p 3000:3000 --name started -d getting-started // name of image started
+i) docker logs started //logs by giving image name
+j) docker logs -f started // for continuous logging
+
+
+8) Dockerhub - to share your images across
+https://hub.docker.com/
+a) Create Reposiory
+b) PS C:\Docker Project\getting-started\app> docker tag getting-started kambojdheeraj/getting-started // We need to tag the name of container with // the name provided on site.
+c) docker images // second image will be there
+d) docker push kambojdheeraj/getting-started // on docker hub, under Tag you will  find yours.
+e) docker pull kambojdheeraj/getting-started
+
+9) CICD Way -> Shown on dockerhub - When you push code to a source code branch (for example in GitHub) for one of those listed image tags, the push uses a webhook to trigger a new build, which produces a Docker image. The built image is then pushed to the Docker Hub registry.
+
+10) Docker Compose - When you have to run mulitple applications or microservices. Running multiple images can be tedious so you can put all those in one place.
+
+a) docker-compose.yml
+version: '2'
+services:
+    web:  //containername
+        build:
+            context: .  //currentpath
+            dockerfile: Dockerfile
+        ports:
+            - "8080:80"
+
+b) docker-compose up -daemon
+
+c) PS C:\Docker Project\getting-started\app> docker images
+REPOSITORY                      TAG       IMAGE ID       CREATED        SIZE
+app_web                         latest    fd61d318d2ee   43 hours ago   383MB
+kambojdheeraj/getting-started   latest    1bcb0d0f7c85   44 hours ago   383MB
+getting-started                 latest    1bcb0d0f7c85   44 hours ago   383MB
+
+d) docker-compose down
+
+e)docker-compose.yml
+
+version: '2'
+services:
+  GabeThermDB:
+    build:
+      context: ./GabeThermDB
+      dockerfile: Dockerfile
+
+  GabeThermApache:
+    build:
+      context: ./GabeThermApache
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+
+  GabeThermPHPMyAdmin:
+    build:
+      context: ./GabeThermPHPMyAdmin
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+
+f) volumes in docker are used for persistence.
+
+g) From docker dashboard - you can run, remove and do bunch of action on those images with clicks.
+
+11) Any update in code, remove old image and create new one and deploy.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Volumes
+12) Persistence across containers
+
+One container data gets lost as and when its removed. We can use volumes to overcome this.
+Volumes provide the ability to connect specific filesystem paths of the container back to the host machine. If a directory in the container is mounted, changes in that directory are also seen on the host machine. If we mount that same directory across container restarts, we’d see the same files.
+
+Example
+a) Named volume - Think of a named volume as simply a bucket of data. Docker maintains the physical location on the disk and you only need to remember the name of the volume. Every time you use the volume, Docker will make sure the correct data is provided.
+
+docker volume create todo-db
+
+b) docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
+-v flag to specify a volume mount. We will use the named volume and mount it to /etc/todos, which will capture all files created at the path.
+Need to mount volume on to contianer ecosystem.
+
+The todo app (Getting-started) stores its data in a SQLite Database at /etc/todos/todo.db. SQLite simply a relational database in which all of the data is stored in a single file. While this isn’t the best for large-scale applications, it works for small demos.
+
+c) http://localhost:3000/ -> add items on UI
+
+d) docker ps
+
+e) docker rm -f 6991b4348308 // container removed using id 
+
+f) docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
+
+g) You will see the items you have added.
+
+h) docker volume inspect todo-db
+[
+    {
+        "CreatedAt": "2021-07-20T01:51:12Z",
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/todo-db/_data",  // on host machine, path of data file
+        "Name": "todo-db",
+        "Options": {},
+        "Scope": "local"
+    }
+]
+
+Eaxmple 
+
+a) Bind Mounts
+Bind mounts have limited functionality compared to volumes. When you use a bind mount, a file or directory on the host machine is mounted into a container. By contrast, when you use a volume, a new directory is created within Docker's storage directory on the host machine, and Docker manages that directory's contents
+
+The main difference a bind mount has from a volume is that since it can exist anywhere on the host filesystem, processes outside of Docker can also modify it. Volumes: Volumes are the preferred way to store persistent data Docker containers create or use. The host filesystem also stores volumes, similar to bind mounts.
+
+With bind mounts, we control the exact mountpoint on the host. 
+
+b) Scenario for this example - - Put the source code in container and do changes inside code in the container. This is helpful for Dev team for continuous changing and deployment.
+Tools going to be used for this exercise - nodemon is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected.
+
+c) remove container of getting-started
+
+d)  On power shell
+	
+	docker run -dp 3000:3000 `
+     -w /app -v "$(pwd):/app" `
+     node:12-alpine `
+     sh -c "yarn install && yarn run dev"
+	 
+	 d.1) -w /app - sets the “working directory” or the current directory that the command will run from i.e. working directory inside container
+	 
+	 d.2) -v "$(pwd):/app" - bind mount the current directory from the host in the container into the /app directory
+	 
+	 d.3) node:12-alpine - the image to use. Note that this is the base image for our app from the Dockerfile
+	 
+	 d.4) sh -c "yarn install && yarn run dev" - the command. We’re starting a shell using sh (alpine doesn’t have bash) and running yarn install to install all dependencies and then running yarn run dev.
+	 
+	 d.5) If we look in the package.json, we’ll see that the dev script is starting nodemon.
+	 package.json ->  
+	 "scripts": {
+     "prettify": "prettier -l --write \"**/*.js\"",
+     "test": "jest",
+     "dev": "nodemon src/index.js"
+	}
+
+e) PS C:\Docker Project\getting-started\app> docker logs -f 19b3d2393155
+
+yarn install v1.22.5
+[1/4] Resolving packages...
+[2/4] Fetching packages...
+info fsevents@1.2.9: The platform "linux" is incompatible with this module.
+info "fsevents@1.2.9" is an optional dependency and failed compatibility check. Excluding it from installation.
+[3/4] Linking dependencies...
+[4/4] Building fresh packages...
+Done in 47.50s.
+yarn run v1.22.5
+$ nodemon src/index.js
+[nodemon] 1.19.2
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching dir(s): *.*
+[nodemon] starting `node src/index.js`
+Using sqlite database at /etc/todos/todo.db
+Listening on port 3000
+	 
+	 
+f) Now change code anywhere and it will reflect on UI like
+src/static/js/app.js
+ -                         {submitting ? 'Adding...' : 'Add Item'}
+ +                         {submitting ? 'Adding...' : 'Add'}
+
+g) Using bind mounts is very common for local development setups. The advantage is that the dev machine doesn’t need to have all of the build tools and environments installed. With a single docker run command, the dev environment is pulled and ready to go.  
+
+
+13) Diff b/w Image and Container.
+First Image is created and then container creates run time environment on basis of image.
+
+Images can exist without containers, whereas a container needs to run an image to exist. Therefore, containers are dependent on images and use them to construct a run-time environment and run an application.
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Network - Muli Container apps
+
+14) USe Case - We want to persist data in MySQL so should we include MySQL in same container where application resides or make different container for this service?
+Thumb rule as best practices says - "each container should do one thing and do it well." "2 Container should be on same network to be able to coomunicate"
+Reason :-
+a) There’s a good chance you’d have to scale APIs and front-ends differently than databases
+b) Separate containers let you version and update versions in isolation
+c) While you may use a container for the database locally, you may want to use a managed service for the database in production. You don’t want to ship your database engine with your app then.
+d) Running multiple processes will require a process manager (the container only starts one process), which adds complexity to container startup/shutdown
+
+So,
+TodoAPP on container1 <-> MySQL on Container2
+
+15) How to do Network i.e communication b/w 2 containers
+
+a) docker network create todo-app //create network
+b) Start a MySQL container and attach it to the network with few environment variables
+	docker run -d `
+     --network todo-app --network-alias mysql `
+     -v todo-mysql-data:/var/lib/mysql `
+     -e MYSQL_ROOT_PASSWORD=secret `
+     -e MYSQL_DATABASE=todos `
+     mysql:5.7
+	 
+	 --network to bind with created network
+	 v for named volume i.e. data to be stored where
+	 e for environment variable catering credentials and create database for your app(todos)
+	 network-alias for alias used as execution for commands to run further.
+	 
+c) docker ps
+d)  docker exec -it <mysql-container-id> mysql -u root -p // to check mysql installed
+e) When the password prompt comes up, type in secret. In the MySQL shell, list the databases and verify you see the todos database.
+
+ mysql> SHOW DATABASES;
+	 
+f) nicolaka/netshoot -> ships with a lot of tools that are useful for troubleshooting or debugging networking issues
+use case - How to find another container who has diff IP address
+
+docker run -it --network todo-app nicolaka/netshoot  // Start a new container using nicolaka/netshoot image. Connect with network todo-app created at 15th step. if nicolaka/netshoot image is not availabe then it will download it and after container start, prompt will come to run below network commands.
+
+g) dig mysql // to get IP address of --network-alias mysql
+
+output
+
+;; ANSWER SECTION:
+mysql.                  600     IN      A       172.19.0.2
+
+It is giving hostname mysql  and IP address as 172.19.0.2
+
+h) Run your app and give hostname = mysql which we fetched from prev step
+
+PS C:\Docker Project\getting-started\app> 
+ docker run -dp 3000:3000 `
+   -w /app -v "$(pwd):/app" `
+   --network todo-app `
+   -e MYSQL_HOST=mysql `
+   -e MYSQL_USER=root `
+   -e MYSQL_PASSWORD=secret `
+   -e MYSQL_DB=todos `
+   node:12-alpine `
+   sh -c "yarn install && yarn run dev"
+ 
+i) Add value on UI
+j) docker exec -it <mysql-container-id> mysql -p todos // connect to mysql
+ mysql> select * from todo_items;
+ 
+ //In code, mysql.js is using todo_items table to check the flow.
+
+
+16) docker-compose.yml
+version: "3.7"
+
+services:
+  app: //service name is taken as network name or alias
+    image: node:12-alpine
+    command: sh -c "yarn install && yarn run dev"
+    ports:
+      - 3000:3000
+	  
+	//Next, we’ll migrate both the working directory (-w /app) and the volume mapping (-v "$(pwd):/app") by using the working_dir and volumes //definitions. One advantage of Docker Compose volume definitions is we can use relative paths from the current directory.
+	
+    working_dir: /app
+    volumes:  
+      - ./:/app
+    environment:
+      MYSQL_HOST: mysql // service name mentioned below is used as host here
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: todos
+
+  mysql: //service name is taken as network name or alias
+    image: mysql:5.7
+    volumes: //named volume to map
+      - todo-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todos
+
+volumes:
+  todo-mysql-data: //named volume created here
+  
+  
+  docker-compose up -d
+  docker-compose logs -f
+  docker-compose down
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Best Practises - https://docs.docker.com/get-started/09_image_best/
+
+1) Docker has partnered with Snyk to provide the vulnerability scanning service
+docker scan getting-started
+
+2)  Using the below command, you can see the command that was used to create each layer within an image.
+docker image history 
+
+3) Cache - Package.json define caching. This helps in quick build
+.dockerignore - file to be ignored
+
+ FROM node:12-alpine
+ WORKDIR /app
+ COPY package.json yarn.lock ./  // first copy package.json
+ RUN yarn install --production // then install dependencies
+ COPY . . // then copy everything else leaving node_module
+ CMD ["node", "src/index.js"]
+ 
+ .dockerignore file
+	node_modules
+	
+docker build -t getting-started // you will see cache in logs
+
+4) Multi Stage builds
+Run junit then final build and deploy is an example
+
+5) Container orchestration - Use case is that docker can die or you want to scale across application. In that case either you need state of docker to see if anything died or you need to know that images has been run on all containers in diff machines.
+So you need something like manager thread which gives command to worker thread.  Kubernetes, Swarm, AWS ECS does that job.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.docker.com/language/java/build-images/
+
+spring-petclinic - Project 
+
+Java build image
+
+1) DOCKER_BUILDKIT=1 docker build . 	// BuildKit allows you to build Docker images efficiently.
+2) cd C:\STS
+3) git clone https://github.com/spring-projects/spring-petclinic.git
+4) cd spring-petclinic
+5) C:\STS\spring-petclinic> ./mvnw spring-boot:run 			//maven build and run project. For this to run JDK should be in 'JAVA_Home' 		      //Dir.https://javatutorial.net/set-java-home-windows-10
+
+6) DockerFile
+
+// syntax directive below is optional, this directive instructs the Docker builder what syntax to use when parsing the Dockerfile,BuildKit a	//automatically checks for updates of the syntax before building, making sure you are using the most current version.
+
+# syntax=docker/dockerfile:1 
+FROM openjdk:16-alpine3.13
+
+//To make things easier when running the rest of our commands, let’s create a working directory. This instructs Docker to use this path as the //default location for all subsequent commands. By doing this, we do not have to type out full file paths but can use relative paths based on the //working directory.
+
+WORKDIR /app  
+
+//we need to get the Maven wrapper and our pom.xml file into our image.
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+
+RUN dos2unix mvnw  // mvnw file is in root path which is there coz POM.xml have the maven dependency and get installed with project install. This //mvnw file on windows platform have issue that locally the mvnw script had Windows line endings (\r\n called CRLF) so need to convert for unix //format of docker.
+
+RUN ./mvnw dependency:go-offline
+
+COPY src ./src
+
+CMD ["./mvnw", "spring-boot:run"]
+
+7) .dockerignore
+target
+
+8) docker build --tag java-docker .
+
+9) docker images
+
+10) docker run --publish 8080:8080 java-docker // running in container the image
+
+11) spring-petclinic is REST application so control doesn't return after running the container above. So open new terminal
+curl --request GET \ --url http://localhost:8080/actuator/health \ --header 'content-type: application/json'
+
+will give output {"status":"UP"}
+
+12) docker run -d -p 8080:8080 java-docker // In detached mode and prompt will return back
+
+13) While running spring-petclinic can show issue related to checkstyle as it was using spring-javaformat. To fix it need to run 
+mvn spring-javaformat:apply  
+This didnt worked for me so removed spring-javaformat dependency from POM
+
+14) docker image rm -f  java-docker // after removing dependeny then had to create image again to take effect and ecreated image and deploy in container
+
+15)  Using docker compose 
+
+a) docker-compose -f docker-compose.yml up --build -d
+
+b)
+version: '3.8'
+services:
+  petclinic:
+    build:
+      context: .  //context can pick file named by Dockefile in the current path
+    ports:
+      - 8000:8000
+      - 8080:8080
+    environment:
+      - SERVER_PORT=8080
+	  
+	  //mysqlserver connected network using alias defined below for mysql service
+      - MYSQL_URL=jdbc:mysql://mysqlserver/petclinic
+    volumes:
+      - ./:/app
+	 
+	 //below params to point to debug mode in java
+    command: ./mvnw spring-boot:run -Dspring-boot.run.profiles=mysql -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"
+
+  mysqlserver:
+    image: mysql:8.0.23
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_USER=petclinic
+      - MYSQL_PASSWORD=petclinic
+      - MYSQL_DATABASE=petclinic
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - mysql_config:/etc/mysql/conf.d
+	  
+//will create new volumes
+volumes:
+  mysql_data:
+  mysql_config:
+  
+c) Put a debug point in vetcontroller in java -> showResourcesVetList() -> run curl --request GET --url http://localhost:8080/vets 
+-> debugger point will come
+  
+
+16) # at the beginning of a line for comment in docker
+
+17) Multi stage Dockerfile
+
+# syntax=docker/dockerfile:1
+
+FROM openjdk:16-alpine3.13 as base // base as reference
+
+WORKDIR /app
+
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN ./mvnw dependency:go-offline
+COPY src ./src
+
+FROM base as test  // base is used here
+CMD ["./mvnw", "test"]
+
+FROM base as development
+CMD ["./mvnw", "spring-boot:run", "-Dspring-boot.run.profiles=mysql", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000'"]
+
+FROM base as build //base is used here
+RUN ./mvnw package
+
+FROM openjdk:11-jre-slim as production
+EXPOSE 8080
+
+COPY --from=build /app/target/spring-petclinic-*.jar /spring-petclinic.jar
+
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/spring-petclinic.jar"]
+
+a) docker build -t java-docker --target test .  // to build till test only
+b)docker run -it --rm --name springboot-test java-docker
+
+c) Docker-compose.yml change
+
+services:
+ petclinic:
+   build:
+     context: .
+     target: development // to build dev from dockerfile
+   ports:
+     - 8000:8000
+     - 8080:8080
+   environment:
+     - SERVER_PORT=8080
+     - MYSQL_URL=jdbc:mysql://mysqlserver/petclinic
+   volumes:
+     - ./:/app\
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CICD -> https://docs.docker.com/language/java/configure-ci-cd/ .Before reading CICD read below - https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Amazon ECS and Docker
+
+https://blog.clairvoyantsoft.com/deploy-and-run-docker-images-on-aws-ecs-85a17a073281
+1) Install AWS CLI - https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-windows.html
+
+2) IAM
+a) Create IAM user on AWS - Took admin template
+b) Create IAM key - Download csv.
+Another way to download csv -> users -> security credentials -> create access key
+c) Configure AWS CLI 
+cmd prompt
+aws configure
+above will take access key, region, output format
+aws s3 ls  //to check configure happen correctly
+
+Set AWS CLI for PowerShell using -> https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-set-up-windows.html
+Open powershell as admin
+ Install-Module -Name AWSPowerShell
+ Set-ExecutionPolicy RemoteSigned 
+
+3) ECR
+	d) Go to management console -> elastic container registry
+	e) Create repositroy -> give name of repo and rest default
+	f) Clone repo mentioned in link
+	g) Go to project path -> mvn spring-boot:build-image
+	Read this -> https://spring.io/blog/2020/01/27/creating-docker-images-with-spring-boot-2-3-0-m1
+	h) docker image ls // copy repo and tagid
+	docker run --tty -p 8080:8080 demo:0.0.1-SNAPSHOT //tty works like stdin stdout
+	i) http://localhost:8080
+
+	j) ECR -> Repo -> view push command
+	   Powershell as admin used to run below command. Below to set up AWS CLI for all future communication
+		j.1)  Set-AWSCredential -AccessKey AKIAV3357DNI4RVPXTFR -SecretKey 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 -StoreAs dkProfile
+		j.2)  Set-AWSCredential -ProfileName dkProfile
+		j.3)  Set-DefaultAWSRegion us-east-2
+		j.4) copy first command from view push command
+		(Get-ECRLoginCommand).Password | docker login --username AWS --password-stdin 403454237521.dkr.ecr.us-east-2.amazonaws.com
+		j.5) docker tag 3cac78a8288e greetingdemo  //create a new tag for matching next step
+		j.6) docker tag greetingdemo:latest 403454237521.dkr.ecr.us-east-2.amazonaws.com/greetingdemo:latest
+		j.7) docker push 403454237521.dkr.ecr.us-east-2.amazonaws.com/greetingdemo:latest
+		j.8) Check repo on ECR and you will get image. Copy URL.
+   
+4)ECS - Elastic Container Service
+https://www.freecodecamp.org/news/amazon-ecs-terms-and-architecture-807d8c4960fd/
+
+* ECS runs your containers on a cluster of Amazon EC2 (Elastic Compute Cloud) virtual machine instances pre-installed with Docker.
+It handles installing containers, scaling, monitoring, and managing these instances through both an API and the AWS Management Console. It allows you to simplify your view of EC2 instances to a pool of resources, such as CPU and memory. The specific instance a container runs on, and maintenance of all instances, is handled by the platform. 
+It is comparable to Kubernetes, Docker Swarm, and Azure Container Service.
+
+* An Elastic Compute Cloud (EC2) instance is a virtual server that you can use to run applications in Amazon Web Services (AWS). When setting up an EC2 instance, you can custom-configure CPU, storage, memory, and networking resources. Uses web service that provides secure, resizable compute capacity in the cloud. 
+Simply put, Amazon EC2 provides resizable, secure compute capacity in the cloud via a VM.
+
+* Task Defination - This is the blueprint describing which Docker containers to run and represents your application. In our example, it would be two containers. Would detail the images to use, the CPU and memory to allocate, environment variables, ports to expose, and how the containers interact.
+
+* Task - An instance of a Task Definition, running the containers detailed within it. Multiple Tasks can be created by one Task Definition, as demand requires.
+
+* Service
+Amazon ECS allows you to run and maintain a specified number of instances of a task definition simultaneously in an Amazon ECS cluster. This is called a service. Example - if the CPU was maxed out from the single task we had running, we may want it to add an additional Task.
+We may, however, want to limit the maximum number of Tasks it can run. 
+Service like grouping of tasks for particular task defination.
+
+a) Infra Creation
+	a.1) Create cluster -> EC2 Linix + Networking -> give name, t2.mcro, keypair (create it its not there for SSH using putty to run commands on servers) -> Take default VPC and Security group for new one if doesnt have existing one -> create -> View Instances -> ECS Instance
+	
+	a.2) Task defination creation -> EC2 -> Task Memoary & CPU - 512 -> Add container -> Image URL & Container name, port, Log Configration check box -> add -> Create
+	
+	a.3) Service create -> Task defination tab -> action -> Create service -> EC2 , service name, number of tasks =1 -> Take all defaults from here on like Load balancer and auto scaling-> create -> view service -> Events. 
+	Service creation has automatically created 1 task running. However, we can create task manually also based on task definition.
+
+b) View application
+	b.1) Go to EC2 instance
+	b.2) select your instance -> copy Ipv4 DNS with port 8080 -> One more step is missing which is to create a new security group and allow inbound traffic over ports 22 (SSH) and 80/8080 (HTTP). Below is for that.
+	b.3) In the EC2 instance window only -> Security groups on left side -> create security group -> Name, VPc of yours, Inbound - add rule - SSH 0.0.00 - HTTP - Cutom TCP -> create
+	b.4) Assciate security -> Ec2 instance -> Action -> Security -> Change -> Remove exisiting-> add new one
+	b.5) http://ec2-18-217-98-79.us-east-2.compute.amazonaws.com:8080/
+	
+5) Cloudwatch
+   a) Log under loggroups
+   b) click on logstreams
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Reference & Glossary
+
+1) https://hub.docker.com/_/mysql/
+
+2) PowerShell runs on Windows, Linux, and macOS. It is a script language built on the .NET Common Language Runtime (CLR)
+
+3) dos2unix - Windows-based text editors put special characters at the end of lines to denote a line return or newline. Normally harmless, some applications on a Linux server cannot understand these characters and can cause the service to not respond correctly. 
+root@host [~]# dos2unix /path/to/file
+
+https://stackoverflow.com/questions/61226664/build-docker-error-bin-sh-1-mvnw-not-found - Steps to install dos2uinx and issue
+
+4) A container is a normal operating system process except that this process is isolated and has its own file system, its own networking, and its own isolated process tree separated from the host.
+
+5) Maven with springboot comes preinstalled but if you want to run mvn command from any root path then follow steps
+https://stackoverflow.com/questions/45119595/how-to-add-maven-to-the-path-variable
+
+6) RUN is used while building image. CMD is used while running container. ENTRYPOINT configures a container that will run as an executable.
